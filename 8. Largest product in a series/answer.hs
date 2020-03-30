@@ -8,7 +8,7 @@ adjacentDigits (x:xs) digits
 
 
 answer :: Int
-answer = head . reverse . sort . map (foldl1 (*) . map (read . pure :: Char -> Int)) $ adjacentDigits series []
+answer = head . reverse . sort . map (product . map (read . pure :: Char -> Int)) $ adjacentDigits series []
 
 
 series :: String
