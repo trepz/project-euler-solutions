@@ -1,11 +1,13 @@
-adjacentDigits :: String -> [String] -> [String]
-adjacentDigits (x:xs) digits
-  | length xs < 12 = digits
-  | otherwise = adjacentDigits xs digits ++ [x:(take 12 xs)]
+adjacentDigits :: String -> Int -> [String]
+adjacentDigits s m = d s [] where 
+  mx = (m - 1)
+  d (x:xs) digits
+    | length xs < mx = digits
+    | otherwise = d xs digits ++ [x:(take mx xs)]
 
 
 answer :: Int
-answer = foldl1 max . map (product . map (read . pure :: Char -> Int)) $ adjacentDigits series []
+answer = foldl1 max . map (product . map (read . pure :: Char -> Int)) $ adjacentDigits series 13
 
 
 series :: String
