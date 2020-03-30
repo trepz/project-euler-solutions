@@ -1,15 +1,14 @@
 import Data.List
 
 
-adjacentPairs :: String -> String -> String
-adjacentPairs (x:xs) pairs
-  | xs == [] = pairs
-  | x == (head xs) = adjacentPairs (tail xs) pairs ++ [x]
-  | otherwise = adjacentPairs xs pairs
+adjacentDigits :: String -> [String] -> [String]
+adjacentDigits (x:xs) digits
+  | length xs < 12 = digits
+  | otherwise = adjacentDigits xs digits ++ [x:(take 12 xs)]
 
 
 answer :: Int
-answer = foldl1 (*) . take 13 . reverse . sort . map (read . pure :: Char -> Int) $ adjacentPairs series []
+answer = head . reverse . sort . map (foldl1 (*) . map (read . pure :: Char -> Int)) $ adjacentDigits series []
 
 
 series :: String
