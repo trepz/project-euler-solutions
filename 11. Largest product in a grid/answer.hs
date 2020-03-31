@@ -25,24 +25,13 @@ grid = [[08,02,22,97,38,15,00,40,00,75,04,05,07,78,52,12,50,77,91,08]
 
 products :: [[Int]] -> [Int]
 products [] = []
-products (x:xs) = let y = take 3 xs in
-                    rowProducts x ++
-                    columnProducts (x:y) ++
-                    pdiagonalProducts (x:y) ++
-                    sdiagonalProducts (x:y) ++
-                    products xs
+products (x:xs) = row x ++ col y ++ d1 y ++ d2 y ++ next where
+  y = x : (take 3 xs)
+  row = map (product . take 4) . tails
+  col = (map product) . transpose
+  d1 = (map product) . transpose . zipWith drop [0..]
+  d2 = d1 . (map reverse)
+  next = products xs
 
-rowProducts :: [Int] -> [Int]
-rowProducts [] = []
-rowProducts (x:xs) = (product $ x : take 3 xs) : rowProducts xs
-
-columnProducts :: [[Int]] -> [Int]
-columnProducts = (map product) . transpose
-
-pdiagonalProducts :: [[Int]] -> [Int]
-pdiagonalProducts = (map product) . transpose . (map (\x -> drop (fst x) (snd x))) . (zip [0..])
-
-sdiagonalProducts :: [[Int]] -> [Int]
-sdiagonalProducts = pdiagonalProducts . (map reverse)
-
+answer :: Int
 answer = maximum $ products grid
