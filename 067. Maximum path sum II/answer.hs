@@ -1,5 +1,3 @@
-import System.IO
-
 triangleToDigits :: String -> [[Int]]
 triangleToDigits = reverse . (map read <$>) . map words . lines
 
