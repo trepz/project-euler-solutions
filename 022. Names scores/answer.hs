@@ -1,5 +1,8 @@
 import Data.List
 
+readF :: String -> [String]
+readF str = read ("[" ++ str ++ "]")
+
 charToNum :: Char -> Int
 charToNum x = case (elemIndex x ['A'..'Z']) of
   Just n  -> n + 1
@@ -10,4 +13,5 @@ answer =
   zipWith (*) [1..] . 
   map (sum . map charToNum) . 
   sort . 
-  lines <$> readFile "names.txt"
+  readF <$> 
+  readFile "names.txt"
